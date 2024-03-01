@@ -1,0 +1,1 @@
+alter table TRANSACAO add FOREIGN KEY (id) references conta(id);
