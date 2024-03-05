@@ -1,6 +1,7 @@
 package com.luizzbsa.carteira.controller;
 
 import com.luizzbsa.carteira.model.entity.Transacao;
+import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoSalvarDTO;
 import com.luizzbsa.carteira.model.repository.TransacoesDAO;
 import com.luizzbsa.carteira.service.TransacaoService;
 import jakarta.transaction.Transactional;
@@ -27,8 +28,8 @@ public class TransacoesController {
 
     @PostMapping()
     @Transactional
-    public void salvar(@RequestBody Transacao transacao){
-        repository.save(transacao);
+    public void salvar(@RequestBody DadosTransacaoSalvarDTO dados){
+        service.salvarTransacao(dados);
     }
 
     @DeleteMapping()

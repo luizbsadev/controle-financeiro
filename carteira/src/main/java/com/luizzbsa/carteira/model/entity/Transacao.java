@@ -1,5 +1,6 @@
 package com.luizzbsa.carteira.model.entity;
 
+import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoSalvarDTO;
 import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
 import jakarta.persistence.*;
 
@@ -19,6 +20,17 @@ public class Transacao {
     private String categoria;
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipoTransacao;
+
+    public Transacao() {
+    }
+    public Transacao(DadosTransacaoSalvarDTO dados, Conta conta) {
+        this.conta = conta;
+        this.valor = dados.valor();
+        this.descricao = dados.descricao();
+        this.tipoTransacao = dados.tipoTransacao();
+        this.categoria = dados.categoria();
+
+    }
 
     public Long getId() {
         return id;
