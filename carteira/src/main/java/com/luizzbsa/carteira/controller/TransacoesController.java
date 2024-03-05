@@ -39,7 +39,7 @@ public class TransacoesController {
 
     @PutMapping()
     @Transactional
-    public void alterar(Long id, Transacao transacaoNova){
+    public void alterar(@RequestParam("id") Long id, @RequestBody Transacao transacaoNova){
         Transacao transacao = repository.getReferenceById(id);
         service.alterarInformacoesTransacao(transacao, transacaoNova);
 
