@@ -33,8 +33,8 @@ public class TransacoesController {
 
     @DeleteMapping()
     @Transactional
-    public void deletar(Transacao transacao){
-        repository.delete(transacao);
+    public void deletar(@RequestParam("id") long id){
+        repository.deleteById(id);
     }
 
     @PutMapping()
