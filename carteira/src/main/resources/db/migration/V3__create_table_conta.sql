@@ -1,8 +1,9 @@
 create table CONTA(
     id int AUTO_INCREMENT,
     saldo float,
+    usuario_id int,
     debito float,
     credito float,
-    FOREIGN KEY (id) references USUARIO(id),
+    FOREIGN KEY (usuario_id) references USUARIO(id),
     PRIMARY KEY (id)
 );

@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "TRANSACOES")
-public class Transações {
+public class Transacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private Conta conta;
     private BigDecimal valor;
@@ -20,11 +20,11 @@ public class Transações {
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipoTransacao;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,3 +60,4 @@ public class Transações {
         this.tipoTransacao = tipoTransacao;
     }
 }
+

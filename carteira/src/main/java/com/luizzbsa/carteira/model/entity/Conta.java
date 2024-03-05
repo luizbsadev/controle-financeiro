@@ -3,7 +3,6 @@ package com.luizzbsa.carteira.model.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,7 +10,7 @@ import java.util.List;
 public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @OneToOne
     private Usuario usuario;
@@ -20,13 +19,13 @@ public class Conta {
     private BigDecimal credito;
 
     @OneToMany(mappedBy = "conta")
-    private List<Transações> transacoes;
+    private List<Transacao> transacoes;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,11 +61,11 @@ public class Conta {
         this.credito = credito;
     }
 
-    public List<Transações> getTransacoes() {
+    public List<Transacao> getTransacoes() {
         return transacoes;
     }
 
-    public void setTransacoes(List<Transações> transacoes) {
+    public void setTransacoes(List<Transacao> transacoes) {
         this.transacoes = transacoes;
     }
 
