@@ -18,18 +18,18 @@ public class TransacaoService {
     TransacoesDAO repositoryTransacao;
     @Autowired
     ContaDAO repositoryConta;
-    public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, Transacao transacaoNova){
-        if(transacaoNova.getCategoria() != null){
-            transacaoVelha.setCategoria(transacaoNova.getCategoria());
+    public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, DadosTransacaoDTO transacaoNova){
+        if(transacaoNova.categoria() != null){
+            transacaoVelha.setCategoria(transacaoNova.categoria());
         }
-        if(transacaoNova.getTipoTransacao() != null){
-            transacaoVelha.setTipoTransacao(transacaoNova.getTipoTransacao());
+        if(transacaoNova.tipoTransacao() != null){
+            transacaoVelha.setTipoTransacao(transacaoNova.tipoTransacao());
         }
-        if(transacaoNova.getValor() != null){
-            transacaoVelha.setValor(transacaoNova.getValor());
+        if(transacaoNova.valor() != null){
+            transacaoVelha.setValor(transacaoNova.valor());
         }
-        if(transacaoNova.getDescricao() != null){
-            transacaoVelha.setDescricao(transacaoNova.getDescricao());
+        if(transacaoNova.descricao() != null){
+            transacaoVelha.setDescricao(transacaoNova.descricao());
         }
 
         return transacaoVelha;
@@ -49,5 +49,15 @@ public class TransacaoService {
         });
 
         return lista;
+    }
+
+    public void deletarTransacao(long id) {
+        repositoryTransacao.deleteById(id);
+    }
+
+    public void alterarTransacao(Long id, DadosTransacaoDTO dadosNovos) {
+        Transacao transacaoAntiga = repositoryTransacao.getReferenceById(id);
+        alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
+
     }
 }

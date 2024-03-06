@@ -18,8 +18,7 @@ public class TransacoesController {
 
 
     @GetMapping()
-    List<DadosTransacaoDTO> all(){
-
+    List<DadosTransacaoDTO> listarTodos(){
         return  service.listarTodos();
     }
 
@@ -32,15 +31,13 @@ public class TransacoesController {
     @DeleteMapping()
     @Transactional
     public void deletar(@RequestParam("id") long id){
-
-        //repository.deleteById(id);
+        service.deletarTransacao(id);
     }
 
     @PutMapping()
     @Transactional
-    public void alterar(@RequestParam("id") Long id, @RequestBody Transacao transacaoNova){
-        //Transacao transacao = repository.getReferenceById(id);
-        //service.alterarInformacoesTransacao(transacao, transacaoNova);
+    public void alterar(@RequestParam("id") Long id, @RequestBody DadosTransacaoDTO dadosNovos){
+        service.alterarTransacao(id, dadosNovos);
 
 
 
