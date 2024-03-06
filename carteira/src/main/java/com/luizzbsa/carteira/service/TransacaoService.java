@@ -2,11 +2,14 @@ package com.luizzbsa.carteira.service;
 
 import com.luizzbsa.carteira.model.entity.Conta;
 import com.luizzbsa.carteira.model.entity.Transacao;
-import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoSalvarDTO;
+import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.model.repository.ContaDAO;
 import com.luizzbsa.carteira.model.repository.TransacoesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TransacaoService {
@@ -32,9 +35,19 @@ public class TransacaoService {
         return transacaoVelha;
     }
 
-    public void salvarTransacao(DadosTransacaoSalvarDTO dados) {
+    public void salvarTransacao(DadosTransacaoDTO dados) {
         Conta conta = repositoryConta.getReferenceById(dados.contaId());
         Transacao transacao = new Transacao(dados, conta);
         repositoryTransacao.save(transacao);
+    }
+
+    public List<DadosTransacaoDTO> listarTodos() {
+        List<DadosTransacaoDTO> lista = new ArrayList<>();
+        repositoryTransacao.findAll().forEach(transacao -> {
+            DadosTransacaoDTO dados = new DadosTransacaoDTO(transacao);
+            lista.add(dados);
+        });
+
+        return lista;
     }
 }

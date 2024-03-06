@@ -1,6 +1,6 @@
 package com.luizzbsa.carteira.model.entity;
 
-import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoSalvarDTO;
+import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
 import jakarta.persistence.*;
 
@@ -23,7 +23,7 @@ public class Transacao {
 
     public Transacao() {
     }
-    public Transacao(DadosTransacaoSalvarDTO dados, Conta conta) {
+    public Transacao(DadosTransacaoDTO dados, Conta conta) {
         this.conta = conta;
         this.valor = dados.valor();
         this.descricao = dados.descricao();
@@ -70,6 +70,14 @@ public class Transacao {
 
     public void setTipoTransacao(TipoTransacao tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 }
 
