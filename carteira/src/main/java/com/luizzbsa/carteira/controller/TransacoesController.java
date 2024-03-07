@@ -3,10 +3,14 @@ package com.luizzbsa.carteira.controller;
 import com.luizzbsa.carteira.model.entity.Transacao;
 import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.service.TransacaoService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -18,26 +22,52 @@ public class TransacoesController {
 
 
     @GetMapping()
-    List<DadosTransacaoDTO> listarTodos(){
-        return  service.listarTodos();
+    ResponseEntity<List<DadosTransacaoDTO>> listarTodos(){
+        return ResponseEntity.ok(service.listarTodos());
+    }
+
+    @GetMapping()
+    @RequestMapping(value = "/{id}")
+    ResponseEntity<DadosTransacaoDTO> listarPorId(@PathVariable("id") Long id){
+        try {
+            return ResponseEntity.ok(service.listarPorId(id));
+        }catch (EntityNotFoundException exception){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping()
     @Transactional
-    public void salvar(@RequestBody DadosTransacaoDTO dados){
-        service.salvarTransacao(dados);
+    public ResponseEntity<DadosTransacaoDTO> salvar(@RequestBody DadosTransacaoDTO dados) throws URISyntaxException {
+        URI location = new URI("/transacoes/"+dados.id());
+        return ResponseEntity.created(location).body(service.salvarTransacao(dados));
     }
 
     @DeleteMapping()
     @Transactional
-    public void deletar(@RequestParam("id") long id){
-        service.deletarTransacao(id);
+    public ResponseEntity<DadosTransacaoDTO> deletar(@RequestParam("id") Long id){
+        try {
+            DadosTransacaoDTO dados = service.deletarTransacao(id);
+            return ResponseEntity.ok(dados);
+
+        }catch (EntityNotFoundException exception){
+            return ResponseEntity.notFound().build();
+        }
+
+
+
+
     }
 
     @PutMapping()
     @Transactional
-    public void alterar(@RequestParam("id") Long id, @RequestBody DadosTransacaoDTO dadosNovos){
-        service.alterarTransacao(id, dadosNovos);
+    public ResponseEntity alterar(@RequestParam("id") Long id, @RequestBody DadosTransacaoDTO dadosNovos){
+        try {
+            DadosTransacaoDTO dados = service.alterarTransacao(id, dadosNovos);
+            return ResponseEntity.ok(dados);
+        }catch (EntityNotFoundException exception){
+            return ResponseEntity.notFound().build();
+        }
 
 
 

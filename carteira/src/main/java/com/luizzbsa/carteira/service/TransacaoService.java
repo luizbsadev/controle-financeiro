@@ -35,10 +35,12 @@ public class TransacaoService {
         return transacaoVelha;
     }
 
-    public void salvarTransacao(DadosTransacaoDTO dados) {
+    public DadosTransacaoDTO salvarTransacao(DadosTransacaoDTO dados) {
         Conta conta = repositoryConta.getReferenceById(dados.contaId());
         Transacao transacao = new Transacao(dados, conta);
         repositoryTransacao.save(transacao);
+
+        return new DadosTransacaoDTO(transacao);
     }
 
     public List<DadosTransacaoDTO> listarTodos() {
@@ -51,13 +53,19 @@ public class TransacaoService {
         return lista;
     }
 
-    public void deletarTransacao(long id) {
-        repositoryTransacao.deleteById(id);
+    public DadosTransacaoDTO deletarTransacao(Long id) {
+        Transacao transacao = repositoryTransacao.getReferenceById(id);
+        repositoryTransacao.delete(transacao);
+        return new DadosTransacaoDTO(transacao);
     }
 
-    public void alterarTransacao(Long id, DadosTransacaoDTO dadosNovos) {
+    public DadosTransacaoDTO alterarTransacao(Long id, DadosTransacaoDTO dadosNovos) {
         Transacao transacaoAntiga = repositoryTransacao.getReferenceById(id);
-        alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
+        Transacao transacao = alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
+        return new DadosTransacaoDTO(transacao);
+    }
 
+    public DadosTransacaoDTO listarPorId(Long id) {
+        return new DadosTransacaoDTO(repositoryTransacao.getReferenceById(id));
     }
 }
