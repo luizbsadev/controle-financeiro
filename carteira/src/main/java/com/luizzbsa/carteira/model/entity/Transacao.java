@@ -1,6 +1,6 @@
 package com.luizzbsa.carteira.model.entity;
 
-import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoDTO;
+import com.luizzbsa.carteira.model.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
 import jakarta.persistence.*;
 

@@ -1,5 +1,6 @@
 package com.luizzbsa.carteira.model.entity;
 
+import com.luizzbsa.carteira.model.dto.DadosContaDTO;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -20,6 +21,16 @@ public class Conta {
 
     @OneToMany(mappedBy = "conta")
     private List<Transacao> transacoes;
+
+    public Conta(DadosContaDTO dados, Usuario usuario) {
+        this.usuario = usuario;
+        this.saldo = dados.saldo();
+        this.debito = dados.debito();
+        this.credito = dados.credito();
+    }
+
+    public Conta() {
+    }
 
     public Long getId() {
         return id;

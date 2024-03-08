@@ -2,7 +2,7 @@ package com.luizzbsa.carteira.service;
 
 import com.luizzbsa.carteira.model.entity.Conta;
 import com.luizzbsa.carteira.model.entity.Transacao;
-import com.luizzbsa.carteira.model.entity.dto.DadosTransacaoDTO;
+import com.luizzbsa.carteira.model.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.model.repository.ContaDAO;
 import com.luizzbsa.carteira.model.repository.TransacoesDAO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.luizzbsa.carteira.model.entity.dto;
+package com.luizzbsa.carteira.model.dto;
 
 import com.luizzbsa.carteira.model.entity.Transacao;
 import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
