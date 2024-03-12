@@ -1,4 +1,4 @@
-package com.luizzbsa.carteira.model.entity.enums;
+package com.luizzbsa.carteira.model.enums;
 
 public enum TipoTransacao {
     CREDITO, DEBITO, CREDITOMENSAL, DEBITOMENSAL

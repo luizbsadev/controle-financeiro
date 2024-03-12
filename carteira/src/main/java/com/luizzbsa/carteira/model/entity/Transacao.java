@@ -1,7 +1,7 @@
 package com.luizzbsa.carteira.model.entity;
 
 import com.luizzbsa.carteira.model.dto.DadosTransacaoDTO;
-import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
+import com.luizzbsa.carteira.model.enums.TipoTransacao;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

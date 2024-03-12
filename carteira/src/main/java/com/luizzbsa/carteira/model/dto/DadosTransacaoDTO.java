@@ -1,8 +1,7 @@
 package com.luizzbsa.carteira.model.dto;
 
 import com.luizzbsa.carteira.model.entity.Transacao;
-import com.luizzbsa.carteira.model.entity.enums.TipoTransacao;
-import org.antlr.v4.runtime.misc.NotNull;
+import com.luizzbsa.carteira.model.enums.TipoTransacao;
 
 import java.math.BigDecimal;
 
