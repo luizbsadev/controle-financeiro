@@ -3,6 +3,8 @@ package com.luizzbsa.carteira.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "USUARIO")
 public class Usuario {
@@ -10,8 +12,9 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String email;
     private String senha;
+
 
     public long getId() {
         return id;
@@ -21,12 +24,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getSenha() {
