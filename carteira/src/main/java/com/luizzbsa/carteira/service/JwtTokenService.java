@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -14,11 +15,12 @@ import java.time.ZonedDateTime;
 @Service
 public class JwtTokenService {
 
-    @Value("{api.security.token.secret}")
-    private String SECRET_KEY;
+
+    private String secret = "123456";//vai ser colocado em uma variavel de ambiente
 
     private static final String ISSUER = "API Controler.Financeiro";
-    private Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+
+    private Algorithm algorithm = Algorithm.HMAC256(secret);
 
     public String generateToken(UserDetailsImpl user) {
         try {

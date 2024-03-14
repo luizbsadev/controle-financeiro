@@ -1,6 +1,8 @@
 package com.luizzbsa.carteira.model.entity;
 
 
+import com.luizzbsa.carteira.infra.SecurityConfiguration;
+import com.luizzbsa.carteira.model.dto.CriarUsuarioDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +16,13 @@ public class Usuario {
     private Long id;
     private String email;
     private String senha;
+
+    public Usuario(){}
+
+    public Usuario(CriarUsuarioDTO dados, SecurityConfiguration securityConfiguration){
+        this.email = dados.email();
+        this.senha = securityConfiguration.passwordEncoder().encode(dados.senha());
+    }
 
 
     public long getId() {
@@ -39,4 +48,6 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+
 }
