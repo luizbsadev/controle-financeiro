@@ -1,6 +1,6 @@
 create table USUARIO(
     id int AUTO_INCREMENT,
-    username varchar(50),
-    senha varchar(30),
+    email varchar(50),
+    senha varchar(100),
   	PRIMARY KEY (id)
 );
