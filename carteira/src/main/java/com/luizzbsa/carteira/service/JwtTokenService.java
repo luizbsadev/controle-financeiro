@@ -16,15 +16,17 @@ import java.time.ZonedDateTime;
 public class JwtTokenService {
 
 
-    private String secret = "123456";//vai ser colocado em uma variavel de ambiente
+    @Value(value = "${api.security.token.secret}")
+    private String secret;
 
     private static final String ISSUER = "API Controler.Financeiro";
 
-    private Algorithm algorithm = Algorithm.HMAC256(secret);
+
 
     public String generateToken(UserDetailsImpl user) {
-        try {
 
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withIssuedAt(creationDate())
@@ -38,6 +40,7 @@ public class JwtTokenService {
 
     public String getSubjectFromToken(String token) {
         try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
                     .withIssuer(ISSUER)
                     .build()
