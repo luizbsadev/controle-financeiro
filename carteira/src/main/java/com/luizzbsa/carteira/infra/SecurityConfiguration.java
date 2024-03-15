@@ -1,13 +1,13 @@
 package com.luizzbsa.carteira.infra;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +25,6 @@ public class SecurityConfiguration {
         public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
                 "/users/login",
                 "/users",
-                "/h2-console/",
                 "/h2-console/**"
         };
 
@@ -42,12 +41,15 @@ public class SecurityConfiguration {
 
             return httpSecurity.csrf(csrf -> csrf.disable())
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .headers(httpSecurityHeadersConfigurer -> {
+                        httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
+                    })
                     .authorizeHttpRequests(request -> {
                         request.requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll();
-
                         request.requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated();
                         request.anyRequest().denyAll();
-                    }).addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                    })
+                    .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                     .build();
         }
 

@@ -40,6 +40,7 @@ public class UsuarioService {
     public void createUser(CriarUsuarioDTO criarUsuarioDto) {
         Usuario novoUsuario = new Usuario(criarUsuarioDto, securityConfiguration);
         repository.save(novoUsuario);
+        System.out.println(novoUsuario.getSenha());
 
     }
 }
