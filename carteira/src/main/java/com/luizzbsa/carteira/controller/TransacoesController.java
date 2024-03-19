@@ -1,6 +1,6 @@
 package com.luizzbsa.carteira.controller;
 
-import com.luizzbsa.carteira.model.dto.DadosTransacaoDTO;
+import com.luizzbsa.carteira.model.dto.*;
 import com.luizzbsa.carteira.service.TransacaoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -22,7 +22,7 @@ public class TransacoesController {
 
 
     @GetMapping()
-    ResponseEntity<List<DadosTransacaoDTO>> listarTodos(@RequestHeader(HttpHeaders.AUTHORIZATION) String token ){
+    ResponseEntity<List<DadosListarTransacaoDTO>> listarTodos(@RequestHeader(HttpHeaders.AUTHORIZATION) String token ){
         System.out.println(token);
         return ResponseEntity.ok(service.listarTodos(token));
     }
@@ -39,41 +39,39 @@ public class TransacoesController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> salvar(@RequestBody DadosTransacaoDTO dados, @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
-            throws URISyntaxException {
-        URI location = new URI("/transacoes/"+dados.id());
-        return ResponseEntity.created(location).body(service.salvarTransacao(dados, token));
+    public ResponseEntity<DadosTransacaoDTO> criar(@RequestBody DadosCriarTransacaoDTO dados,
+                                                    @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
+                                                    throws URISyntaxException {
+
+        DadosTransacaoDTO dadosTransacaoDTO = service.salvarTransacao(dados, token);
+        URI location = new URI("/transacoes/"+dadosTransacaoDTO.id());
+        return ResponseEntity.created(location).body(dadosTransacaoDTO);
     }
 
     @DeleteMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> deletar(@RequestParam("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public ResponseEntity<DadosDeletarTransacaoDTO> deletar(@RequestParam("id") Long id,
+                                                     @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
-            DadosTransacaoDTO dados = service.deletarTransacao(id, token);
+            DadosDeletarTransacaoDTO dados = service.deletarTransacao(id, token);
             return ResponseEntity.ok(dados);
 
         }catch (EntityNotFoundException exception){
             return ResponseEntity.notFound().build();
         }
-
-
-
-
     }
 
     @PutMapping()
     @Transactional
     public ResponseEntity alterar(@RequestParam("id") Long id,
-                                  @RequestBody DadosTransacaoDTO dadosNovos,
+                                  @RequestBody DadosAlterarTransacaoDTO dadosNovos,
                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
-            DadosTransacaoDTO dados = service.alterarTransacao(id, dadosNovos, token);
+            DadosAlterarTransacaoDTO dados = service.alterarTransacao(id, dadosNovos, token);
             return ResponseEntity.ok(dados);
         }catch (EntityNotFoundException exception){
             return ResponseEntity.notFound().build();
         }
-
-
-
     }
+
 }

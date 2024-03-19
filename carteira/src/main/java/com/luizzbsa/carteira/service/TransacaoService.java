@@ -1,8 +1,8 @@
 package com.luizzbsa.carteira.service;
 
+import com.luizzbsa.carteira.model.dto.*;
 import com.luizzbsa.carteira.model.entity.Conta;
 import com.luizzbsa.carteira.model.entity.Transacao;
-import com.luizzbsa.carteira.model.dto.DadosTransacaoDTO;
 import com.luizzbsa.carteira.model.repository.ContaDAO;
 import com.luizzbsa.carteira.model.repository.TransacoesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class TransacaoService {
     ContaDAO repositoryConta;
     @Autowired
     JwtTokenService tokenService;
-    public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, DadosTransacaoDTO transacaoNova){
+    public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, DadosAlterarTransacaoDTO transacaoNova){
         if(transacaoNova.categoria() != null){
             transacaoVelha.setCategoria(transacaoNova.categoria());
         }
@@ -37,7 +37,7 @@ public class TransacaoService {
         return transacaoVelha;
     }
 
-    public DadosTransacaoDTO salvarTransacao(DadosTransacaoDTO dados, String token) {
+    public DadosTransacaoDTO salvarTransacao(DadosCriarTransacaoDTO dados, String token) {
         String usuario = pegarUsuarioEmailDoToken(token);
         Conta conta = repositoryConta.findByUsuarioEmail(usuario);
         Transacao transacao = new Transacao(dados, conta);
@@ -46,29 +46,29 @@ public class TransacaoService {
         return new DadosTransacaoDTO(transacao);
     }
 
-    public List<DadosTransacaoDTO> listarTodos(String token) {
-        List<DadosTransacaoDTO> lista = new ArrayList<>();
+    public List<DadosListarTransacaoDTO> listarTodos(String token) {
+        List<DadosListarTransacaoDTO> lista = new ArrayList<>();
         String usuario = pegarUsuarioEmailDoToken(token);
         repositoryTransacao.findAllByContaUsuarioEmail(usuario).forEach(transacao -> {
-            DadosTransacaoDTO dados = new DadosTransacaoDTO(transacao);
+            DadosListarTransacaoDTO dados = new DadosListarTransacaoDTO(transacao);
             lista.add(dados);
         });
 
         return lista;
     }
 
-    public DadosTransacaoDTO deletarTransacao(Long id, String token) {
+    public DadosDeletarTransacaoDTO deletarTransacao(Long id, String token) {
         String usuario = pegarUsuarioEmailDoToken(token);
         Transacao transacao = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         repositoryTransacao.delete(transacao);
-        return new DadosTransacaoDTO(transacao);
+        return new DadosDeletarTransacaoDTO(transacao);
     }
 
-    public DadosTransacaoDTO alterarTransacao(Long id, DadosTransacaoDTO dadosNovos, String token) {
+    public DadosAlterarTransacaoDTO alterarTransacao(Long id, DadosAlterarTransacaoDTO dadosNovos, String token) {
         String usuario = pegarUsuarioEmailDoToken(token);
         Transacao transacaoAntiga = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         Transacao transacao = alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
-        return new DadosTransacaoDTO(transacao);
+        return new DadosAlterarTransacaoDTO(transacao);
     }
 
     public DadosTransacaoDTO listarPorId(Long id) {
