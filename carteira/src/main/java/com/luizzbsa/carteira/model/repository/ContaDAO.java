@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContaDAO extends JpaRepository<Conta, Long> {
-
+    Conta findByUsuarioEmail(String email);
 }

@@ -39,16 +39,17 @@ public class TransacoesController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> salvar(@RequestBody DadosTransacaoDTO dados) throws URISyntaxException {
+    public ResponseEntity<DadosTransacaoDTO> salvar(@RequestBody DadosTransacaoDTO dados, @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
+            throws URISyntaxException {
         URI location = new URI("/transacoes/"+dados.id());
-        return ResponseEntity.created(location).body(service.salvarTransacao(dados));
+        return ResponseEntity.created(location).body(service.salvarTransacao(dados, token));
     }
 
     @DeleteMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> deletar(@RequestParam("id") Long id){
+    public ResponseEntity<DadosTransacaoDTO> deletar(@RequestParam("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
-            DadosTransacaoDTO dados = service.deletarTransacao(id);
+            DadosTransacaoDTO dados = service.deletarTransacao(id, token);
             return ResponseEntity.ok(dados);
 
         }catch (EntityNotFoundException exception){
@@ -62,9 +63,11 @@ public class TransacoesController {
 
     @PutMapping()
     @Transactional
-    public ResponseEntity alterar(@RequestParam("id") Long id, @RequestBody DadosTransacaoDTO dadosNovos){
+    public ResponseEntity alterar(@RequestParam("id") Long id,
+                                  @RequestBody DadosTransacaoDTO dadosNovos,
+                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
-            DadosTransacaoDTO dados = service.alterarTransacao(id, dadosNovos);
+            DadosTransacaoDTO dados = service.alterarTransacao(id, dadosNovos, token);
             return ResponseEntity.ok(dados);
         }catch (EntityNotFoundException exception){
             return ResponseEntity.notFound().build();

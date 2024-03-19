@@ -37,8 +37,9 @@ public class TransacaoService {
         return transacaoVelha;
     }
 
-    public DadosTransacaoDTO salvarTransacao(DadosTransacaoDTO dados) {
-        Conta conta = repositoryConta.getReferenceById(dados.contaId());
+    public DadosTransacaoDTO salvarTransacao(DadosTransacaoDTO dados, String token) {
+        String usuario = pegarUsuarioEmailDoToken(token);
+        Conta conta = repositoryConta.findByUsuarioEmail(usuario);
         Transacao transacao = new Transacao(dados, conta);
         repositoryTransacao.save(transacao);
 
@@ -47,7 +48,7 @@ public class TransacaoService {
 
     public List<DadosTransacaoDTO> listarTodos(String token) {
         List<DadosTransacaoDTO> lista = new ArrayList<>();
-        String usuario = tokenService.getSubjectFromToken(token.replace("Bearer ", ""));
+        String usuario = pegarUsuarioEmailDoToken(token);
         repositoryTransacao.findAllByContaUsuarioEmail(usuario).forEach(transacao -> {
             DadosTransacaoDTO dados = new DadosTransacaoDTO(transacao);
             lista.add(dados);
@@ -56,19 +57,25 @@ public class TransacaoService {
         return lista;
     }
 
-    public DadosTransacaoDTO deletarTransacao(Long id) {
-        Transacao transacao = repositoryTransacao.getReferenceById(id);
+    public DadosTransacaoDTO deletarTransacao(Long id, String token) {
+        String usuario = pegarUsuarioEmailDoToken(token);
+        Transacao transacao = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         repositoryTransacao.delete(transacao);
         return new DadosTransacaoDTO(transacao);
     }
 
-    public DadosTransacaoDTO alterarTransacao(Long id, DadosTransacaoDTO dadosNovos) {
-        Transacao transacaoAntiga = repositoryTransacao.getReferenceById(id);
+    public DadosTransacaoDTO alterarTransacao(Long id, DadosTransacaoDTO dadosNovos, String token) {
+        String usuario = pegarUsuarioEmailDoToken(token);
+        Transacao transacaoAntiga = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         Transacao transacao = alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
         return new DadosTransacaoDTO(transacao);
     }
 
     public DadosTransacaoDTO listarPorId(Long id) {
         return new DadosTransacaoDTO(repositoryTransacao.getReferenceById(id));
+    }
+
+    public String pegarUsuarioEmailDoToken(String token){
+        return tokenService.getSubjectFromToken(token.replace("Bearer ", ""));
     }
 }

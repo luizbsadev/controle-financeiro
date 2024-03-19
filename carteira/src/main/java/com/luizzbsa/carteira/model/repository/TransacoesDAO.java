@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TransacoesDAO extends JpaRepository<Transacao, Long> {
     List<Transacao> findAllByContaUsuarioEmail(String email);
+
+    Transacao findByIdAndContaUsuarioEmail(Long id, String email);
 }
