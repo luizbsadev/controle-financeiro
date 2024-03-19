@@ -18,6 +18,8 @@ public class TransacaoService {
     TransacoesDAO repositoryTransacao;
     @Autowired
     ContaDAO repositoryConta;
+    @Autowired
+    JwtTokenService tokenService;
     public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, DadosTransacaoDTO transacaoNova){
         if(transacaoNova.categoria() != null){
             transacaoVelha.setCategoria(transacaoNova.categoria());
@@ -43,9 +45,10 @@ public class TransacaoService {
         return new DadosTransacaoDTO(transacao);
     }
 
-    public List<DadosTransacaoDTO> listarTodos() {
+    public List<DadosTransacaoDTO> listarTodos(String token) {
         List<DadosTransacaoDTO> lista = new ArrayList<>();
-        repositoryTransacao.findAll().forEach(transacao -> {
+        String usuario = tokenService.getSubjectFromToken(token.replace("Bearer ", ""));
+        repositoryTransacao.findAllByContaUsuarioEmail(usuario).forEach(transacao -> {
             DadosTransacaoDTO dados = new DadosTransacaoDTO(transacao);
             lista.add(dados);
         });

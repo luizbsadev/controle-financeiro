@@ -5,6 +5,7 @@ import com.luizzbsa.carteira.service.TransacaoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,9 @@ public class TransacoesController {
 
 
     @GetMapping()
-    ResponseEntity<List<DadosTransacaoDTO>> listarTodos(){
-        return ResponseEntity.ok(service.listarTodos());
+    ResponseEntity<List<DadosTransacaoDTO>> listarTodos(@RequestHeader(HttpHeaders.AUTHORIZATION) String token ){
+        System.out.println(token);
+        return ResponseEntity.ok(service.listarTodos(token));
     }
 
     @GetMapping()
