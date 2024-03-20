@@ -79,6 +79,7 @@ public class TransacaoService {
         String usuario = pegarUsuarioEmailDoToken(token);
         Transacao transacaoAntiga = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         Transacao transacao = alterarInformacoesTransacao(transacaoAntiga, dadosNovos);
+        contaService.atualizarSaldo(transacao.getConta());
         return new DadosAlterarTransacaoDTO(transacao);
     }
 
