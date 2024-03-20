@@ -25,7 +25,7 @@ public class Transacao {
     }
     public Transacao(DadosCriarTransacaoDTO dados, Conta conta) {
         this.conta = conta;
-        this.valor = new BigDecimal(0);
+        this.valor = dados.valor();
         this.descricao = dados.descricao();
         this.tipoTransacao = dados.tipoTransacao();
         this.categoria = dados.categoria();

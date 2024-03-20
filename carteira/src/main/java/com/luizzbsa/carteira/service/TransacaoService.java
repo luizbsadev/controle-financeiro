@@ -14,15 +14,17 @@ import java.util.List;
 @Service
 public class TransacaoService {
 
-    TransacoesDAO repositoryTransacao;
-    ContaDAO repositoryConta;
-    JwtTokenService tokenService;
+    private TransacoesDAO repositoryTransacao;
+    private ContaDAO repositoryConta;
+    private JwtTokenService tokenService;
+    private ContaService contaService;
 
     @Autowired
-    public TransacaoService(TransacoesDAO transacaoDAO, ContaDAO contaDAO, JwtTokenService jwtTokenService){
+    public TransacaoService(TransacoesDAO transacaoDAO, ContaDAO contaDAO, JwtTokenService jwtTokenService, ContaService contaService){
         this.repositoryTransacao = transacaoDAO;
         this.repositoryConta = contaDAO;
         this.tokenService = jwtTokenService;
+        this.contaService = contaService;
     }
 
 
@@ -48,6 +50,8 @@ public class TransacaoService {
         Conta conta = repositoryConta.findByUsuarioEmail(usuario);
         Transacao transacao = new Transacao(dados, conta);
         repositoryTransacao.save(transacao);
+        contaService.atualizarSaldo(conta);
+
 
         return new DadosTransacaoDTO(transacao);
     }

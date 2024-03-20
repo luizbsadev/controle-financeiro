@@ -22,11 +22,11 @@ public class Conta {
     @OneToMany(mappedBy = "conta")
     private List<Transacao> transacoes;
 
-    public Conta(DadosContaDTO dados, Usuario usuario) {
+    public Conta(Usuario usuario) {
         this.usuario = usuario;
-        this.saldo = dados.saldo();
-        this.debito = dados.debito();
-        this.credito = dados.credito();
+        this.saldo = new BigDecimal(0);
+        this.debito = new BigDecimal(0);
+        this.credito = new BigDecimal(0);
     }
 
     public Conta() {
@@ -80,6 +80,15 @@ public class Conta {
         this.transacoes = transacoes;
     }
 
+    public void somarValor(BigDecimal valor) {
+        this.saldo = saldo.add(valor);
+        this.credito = credito.add(valor);
+    }
+
+    public void subtrairValor(BigDecimal valor){
+        this.saldo = saldo.subtract(valor);
+        this.debito = debito.add(valor);
+    }
 }
 
 
