@@ -71,7 +71,7 @@ public class TransacaoService {
         String usuario = pegarUsuarioEmailDoToken(token);
         Transacao transacao = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         repositoryTransacao.delete(transacao);
-
+        contaService.atualizarSaldo(transacao.getConta());
         return new DadosDeletarTransacaoDTO(transacao);
     }
 
