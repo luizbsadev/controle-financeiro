@@ -15,10 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/conta")
 public class ContaController {
-
-    @Autowired
     private ContaService service;
-
+    @Autowired
+    public ContaController(ContaService service) {
+        this.service = service;
+    }
 
     @GetMapping()
     ResponseEntity<List<DadosContaDTO>> listarTodos(){

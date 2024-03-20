@@ -14,16 +14,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService {
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
     private JwtTokenService jwtTokenService;
-    @Autowired
     private UsuarioDAO repository;
-    @Autowired
     private SecurityConfiguration securityConfiguration;
 
+    @Autowired
+    public UsuarioService(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, UsuarioDAO repository, SecurityConfiguration securityConfiguration) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenService = jwtTokenService;
+        this.repository = repository;
+        this.securityConfiguration = securityConfiguration;
+    }
 
     public TokenJWTDTO authenticateUser(LoginDto loginUserDto) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
@@ -36,7 +38,7 @@ public class UsuarioService {
         return new TokenJWTDTO(jwtTokenService.generateToken(userDetails));
     }
 
-    // Método responsável por criar um usuário
+
     public void createUser(CriarUsuarioDTO criarUsuarioDto) {
         Usuario novoUsuario = new Usuario(criarUsuarioDto, securityConfiguration);
         repository.save(novoUsuario);

@@ -15,10 +15,15 @@ import java.util.List;
 @Service
 public class ContaService {
 
-    @Autowired
     ContaDAO repositoryConta;
-    @Autowired
     UsuarioDAO repositoryUsuario;
+
+    @Autowired
+    public ContaService(ContaDAO repositoryConta, UsuarioDAO repositoryUsuario) {
+        this.repositoryConta = repositoryConta;
+        this.repositoryUsuario = repositoryUsuario;
+    }
+
     public List<DadosContaDTO> listarTodos() {
         List<DadosContaDTO> lista = new ArrayList();
         repositoryConta.findAll().forEach(conta -> {

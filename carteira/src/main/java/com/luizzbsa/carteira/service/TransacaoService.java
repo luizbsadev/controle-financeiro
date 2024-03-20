@@ -14,12 +14,18 @@ import java.util.List;
 @Service
 public class TransacaoService {
 
-    @Autowired
     TransacoesDAO repositoryTransacao;
-    @Autowired
     ContaDAO repositoryConta;
-    @Autowired
     JwtTokenService tokenService;
+
+    @Autowired
+    public TransacaoService(TransacoesDAO transacaoDAO, ContaDAO contaDAO, JwtTokenService jwtTokenService){
+        this.repositoryTransacao = transacaoDAO;
+        this.repositoryConta = contaDAO;
+        this.tokenService = jwtTokenService;
+    }
+
+
     public Transacao alterarInformacoesTransacao(Transacao transacaoVelha, DadosAlterarTransacaoDTO transacaoNova){
         if(transacaoNova.categoria() != null){
             transacaoVelha.setCategoria(transacaoNova.categoria());
@@ -61,6 +67,7 @@ public class TransacaoService {
         String usuario = pegarUsuarioEmailDoToken(token);
         Transacao transacao = repositoryTransacao.findByIdAndContaUsuarioEmail(id, usuario);
         repositoryTransacao.delete(transacao);
+
         return new DadosDeletarTransacaoDTO(transacao);
     }
 

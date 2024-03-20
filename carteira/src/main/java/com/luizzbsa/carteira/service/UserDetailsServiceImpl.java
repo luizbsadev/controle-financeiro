@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    @Autowired
     UsuarioDAO repository;
+    @Autowired
+    public UserDetailsServiceImpl(UsuarioDAO repository) {
+        this.repository = repository;
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = repository.findByEmail(username).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));

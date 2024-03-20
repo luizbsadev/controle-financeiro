@@ -16,10 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/transacoes")
 public class TransacoesController {
-
-    @Autowired
     private TransacaoService service;
-
+    @Autowired
+    public TransacoesController(TransacaoService service) {
+        this.service = service;
+    }
 
     @GetMapping()
     ResponseEntity<List<DadosListarTransacaoDTO>> listarTodos(@RequestHeader(HttpHeaders.AUTHORIZATION) String token ){

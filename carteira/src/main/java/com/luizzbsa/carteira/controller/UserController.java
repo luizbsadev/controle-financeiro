@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("users")
 public class UserController {
-
-    @Autowired
     UsuarioService service;
-
-
+    @Autowired
+    public UserController(UsuarioService service) {
+        this.service = service;
+    }
     @PostMapping
     ResponseEntity<Void> cadastrarUsuario(@RequestBody CriarUsuarioDTO dados){
         service.createUser(dados);
