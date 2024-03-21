@@ -25,11 +25,23 @@ public class SecurityConfiguration {
         public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
                 "/users/login",
                 "/users",
-                "/h2-console/**"
+
+
         };
 
+        public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_PLUS = {
+                "/h2-console/**",
+                "/h2-console",
+                "/v3/",
+                "/v3/**",
+                "/swagger-ui",
+                "/swagger-ui/**",
+                "/favicon.ico"
+    };
+
+
         public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-                "/conta",
+
                 "/transacoes"
         };
 
@@ -46,6 +58,7 @@ public class SecurityConfiguration {
                     })
                     .authorizeHttpRequests(request -> {
                         request.requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll();
+                        request.requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_PLUS).permitAll();
                         request.requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated();
                         request.anyRequest().denyAll();
                     })

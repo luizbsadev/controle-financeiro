@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class UserAuthenticationFilter extends OncePerRequestFilter {
@@ -40,7 +41,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                throw new RuntimeException("O token está ausente.");
+                throw new RuntimeException("O token está ausente." +request.getRequestURI());
             }
         }
         filterChain.doFilter(request, response); // Continua o processamento da requisição
@@ -58,12 +59,24 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        if(requestURI.contains("/h2-console") || requestURI.contains("/favicon.ico")){
+        if(seContem(requestURI, Arrays.asList(SecurityConfiguration.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED_PLUS))){
             return false;
         }else{
             return !Arrays.asList(SecurityConfiguration.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
         }
     }
+
+    private boolean seContem(String uri, List<String> lista){
+        boolean contem = false;
+        for (String pattern : lista) {
+            if (uri.contains(pattern)) {
+                contem = true;
+                break;
+            }
+        }
+        return contem;
+    }
+
 
 }
 

@@ -28,20 +28,10 @@ public class TransacoesController {
         return ResponseEntity.ok(service.listarTodos(token));
     }
 
-    @GetMapping()
-    @RequestMapping(value = "/{id}")
-    ResponseEntity<DadosTransacaoDTO> listarPorId(@PathVariable("id") Long id){
-        try {
-            return ResponseEntity.ok(service.listarPorId(id));
-        }catch (EntityNotFoundException exception){
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @PostMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> criar(@RequestBody DadosCriarTransacaoDTO dados,
-                                                    @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
+    public ResponseEntity<DadosTransacaoDTO> criarTransacaoDto(@RequestBody DadosCriarTransacaoDTO dados,
+                                                               @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
                                                     throws URISyntaxException {
 
         DadosTransacaoDTO dadosTransacaoDTO = service.salvarTransacao(dados, token);
