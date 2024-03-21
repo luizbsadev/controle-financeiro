@@ -1,5 +1,5 @@
 # Controle Financeiro API
-É uma API Rest usando Spring boot, onde serão disponibilizados os endpoints necessários para manipular transações, criar usuarios, executar a lógica de login usando JWT.
+É uma API Rest usando Spring boot, onde serão disponibilizados os endpoints necessários para manipular transações, criar usuarios, executar a lógica de login e etc.
 ## No projeto foi utilizado: 
 * Java 17 - Linguagem de programação principal no back-end.
 * Spring Boot - framework que facilita e agiliza o desenvolvimento de aplicações web. 
