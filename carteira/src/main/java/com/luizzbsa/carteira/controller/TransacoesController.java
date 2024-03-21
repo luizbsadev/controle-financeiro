@@ -4,6 +4,7 @@ import com.luizzbsa.carteira.model.dto.*;
 import com.luizzbsa.carteira.service.TransacaoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,9 @@ public class TransacoesController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity<DadosTransacaoDTO> criarTransacaoDto(@RequestBody DadosCriarTransacaoDTO dados,
+    public ResponseEntity<DadosTransacaoDTO> criarTransacaoDto(@RequestBody @Valid DadosCriarTransacaoDTO dados,
                                                                @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
-                                                    throws URISyntaxException {
+                                                                throws URISyntaxException {
 
         DadosTransacaoDTO dadosTransacaoDTO = service.salvarTransacao(dados, token);
         URI location = new URI("/transacoes/"+dadosTransacaoDTO.id());
@@ -42,7 +43,7 @@ public class TransacoesController {
     @DeleteMapping()
     @Transactional
     public ResponseEntity<DadosDeletarTransacaoDTO> deletar(@RequestParam("id") Long id,
-                                                     @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
             DadosDeletarTransacaoDTO dados = service.deletarTransacao(id, token);
             return ResponseEntity.ok(dados);
@@ -54,7 +55,7 @@ public class TransacoesController {
 
     @PutMapping()
     @Transactional
-    public ResponseEntity alterar(@RequestParam("id") Long id,
+    public ResponseEntity<DadosAlterarTransacaoDTO> alterar(@RequestParam("id") Long id,
                                   @RequestBody DadosAlterarTransacaoDTO dadosNovos,
                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {

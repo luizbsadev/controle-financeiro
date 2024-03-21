@@ -4,6 +4,7 @@ import com.luizzbsa.carteira.model.dto.CriarUsuarioDTO;
 import com.luizzbsa.carteira.model.dto.LoginDto;
 import com.luizzbsa.carteira.model.dto.TokenJWTDTO;
 import com.luizzbsa.carteira.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,12 @@ public class UserController {
         this.service = service;
     }
     @PostMapping
-    ResponseEntity<Void> cadastrarUsuario(@RequestBody CriarUsuarioDTO dados){
+    ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid CriarUsuarioDTO dados){
         service.criarUsuario(dados);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PostMapping("/login")
-    public ResponseEntity<TokenJWTDTO> authenticateUser(@RequestBody LoginDto loginUserDto) {
+    public ResponseEntity<TokenJWTDTO> autenticarUsuario(@RequestBody @Valid LoginDto loginUserDto) {
         TokenJWTDTO token = service.authenticarUsuario(loginUserDto);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }

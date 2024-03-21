@@ -1,4 +1,12 @@
 package com.luizzbsa.carteira.model.dto;
 
-public record LoginDto(String email, String senha) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
+public record LoginDto(
+        @Email
+        @NotNull
+        String email,
+        @NotNull
+        String senha) {
 }
