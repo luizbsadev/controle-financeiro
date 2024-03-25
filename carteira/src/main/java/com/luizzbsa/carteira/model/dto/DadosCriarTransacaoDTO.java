@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 public record DadosCriarTransacaoDTO(
 
-        @NotBlank
+        @NotNull
         @Positive
         BigDecimal valor,
         String descricao,

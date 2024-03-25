@@ -23,7 +23,7 @@
 		</profile>
 	</profiles>
 	<groupId>com.luizzbsa</groupId>
-	<artifactId>carteira</artifactId>
+	<artifactId>controle-financeiro-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>carteira</name>
 	<description>Api de controle financeiro</description>
