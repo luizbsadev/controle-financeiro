@@ -1,5 +1,5 @@
 # Clarity
-É uma API Rest usando Spring boot e Angular, onde serão disponibilizados os endpoints necessários para manipular transações, criar usuarios, executar a lógica de login e etc.
+É uma API Rest usando Spring boot e Angular, com a funcionalide de ajudar o usuario a ter um melhor controle de seus gastos
 ## No projeto foi utilizado: 
 * Java 17 - Linguagem de programação principal no back-end.
 * Spring Boot - framework que facilita e agiliza o desenvolvimento de aplicações web. 
