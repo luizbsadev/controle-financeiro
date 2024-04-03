@@ -1,0 +1,13 @@
+section.itens {
+    justify-content: space-around;
+    display: flex;
+}
+
+div.item { 
+    background-color: #ffffff;
+    padding: 40px;
+}
+
+var{
+    text-align: center;
+}
