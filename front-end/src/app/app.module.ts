@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ValoresComponent } from './valores/valores.component';
 import { AlternadorComponent } from './alternador/alternador.component';
+import { TabelaComponent } from './tabela/tabela.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { AlternadorComponent } from './alternador/alternador.component';
     AppComponent,
     ValoresComponent,
     AlternadorComponent,
+    TabelaComponent,
     
   ],
   imports: [
