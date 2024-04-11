@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ValoresComponent } from './valores/valores.component';
 import { AlternadorComponent } from './alternador/alternador.component';
 import { TabelaComponent } from './tabela/tabela.component';
+import { TransacoesComponent } from './transacoes/transacoes.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -14,6 +16,8 @@ import { TabelaComponent } from './tabela/tabela.component';
     ValoresComponent,
     AlternadorComponent,
     TabelaComponent,
+    TransacoesComponent,
+    LoginComponent,
     
   ],
   imports: [
