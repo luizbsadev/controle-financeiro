@@ -6,7 +6,7 @@ import com.luizzbsa.carteira.model.enums.TipoTransacao;
 import java.math.BigDecimal;
 
 public record DadosListarTransacaoDTO(
-        Long contaId,
+        Long transacaoId,
         BigDecimal valor,
         String descricao,
         String categoria,

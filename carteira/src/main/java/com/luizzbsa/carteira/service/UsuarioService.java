@@ -37,7 +37,7 @@ public class UsuarioService {
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
+        	
         return new TokenJWTDTO(jwtTokenService.generateToken(userDetails));
     }
 
